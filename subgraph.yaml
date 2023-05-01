@@ -1,0 +1,28 @@
+specVersion: 0.0.2
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: solana/program
+    name: Casier
+    source:
+      address: 'CAsieqooSrgVxhgWRwh21gyjq7Rmuhmo4qTW9XzXtAvW'
+      idl: Casier
+    mapping:
+      kind: solana/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - Casier
+      idls:
+        - name: Casier
+          file: ./idls/casier.json
+      callHandlers:
+        - function: deposit
+          handler: handleDepositCall
+        - function: withdraw
+          handler: handleWithdrawCall
+        - function: withdrawAndBurn
+          handler: handleWithdrawAndBurnCall
+        - function: withdrawV2
+          handler: handleWithdrawV2Call
+      file: ./src/mapping.ts

@@ -1,0 +1,34 @@
+# #[account]
+# #[derive(Default)]
+# pub struct Config {
+#     pub admin: Pubkey,
+#     pub is_frozen: bool,
+# }
+
+type Config @entity {
+  id: ID!
+  admin: Bytes!
+  isFrozen: Boolean!
+}
+
+# #[account]
+# #[derive(Default)]
+# pub struct Locker {
+#     pub owner: Pubkey,
+#     pub mints: Vec<Pubkey>,
+#     pub amounts: Vec<u64>,
+#     pub version: u8,
+#     pub space: u64,
+# }
+
+type Locker @entity {
+  id: ID!
+  owner: Bytes!
+}
+
+type LockerMint @entity {
+  id: ID! # locker-mint
+  locker: Bytes!
+  mint: Bytes!
+  amount: BigInt!
+}

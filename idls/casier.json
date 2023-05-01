@@ -1,0 +1,545 @@
+{
+  "version": "0.1.0",
+  "name": "casier",
+  "instructions": [
+    {
+      "name": "initialize",
+      "accounts": [],
+      "args": []
+    },
+    {
+      "name": "initConfig",
+      "accounts": [
+        {
+          "name": "config",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "feePayer",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "rent",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "initLocker",
+      "accounts": [
+        {
+          "name": "locker",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "owner",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "rent",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "space",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "increaseLockerSize",
+      "accounts": [],
+      "args": [
+        {
+          "name": "newSize",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "deposit",
+      "accounts": [
+        {
+          "name": "config",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "locker",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "mint",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "owner",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "admin",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "userTa",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "vaultTa",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "rent",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "vaultBump",
+          "type": "u8"
+        },
+        {
+          "name": "depositAmount",
+          "type": "u64"
+        },
+        {
+          "name": "beforeAmount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "withdraw",
+      "accounts": [
+        {
+          "name": "config",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "locker",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "mint",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "owner",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "admin",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "userTa",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "vaultTa",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "associatedTokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "rent",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "vaultBump",
+          "type": "u8"
+        },
+        {
+          "name": "withdrawAmount",
+          "type": "u64"
+        },
+        {
+          "name": "beforeAmount",
+          "type": "u64"
+        },
+        {
+          "name": "finalAmount",
+          "type": "u64"
+        },
+        {
+          "name": "withTransfer",
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "name": "withdrawAndBurn",
+      "accounts": [
+        {
+          "name": "config",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "locker",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "mint",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "owner",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "admin",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "userTa",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "burnTa",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "vaultTa",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "associatedTokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "rent",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "vaultBump",
+          "type": "u8"
+        },
+        {
+          "name": "burnBump",
+          "type": "u8"
+        },
+        {
+          "name": "withdrawAmount",
+          "type": "u64"
+        },
+        {
+          "name": "beforeAmount",
+          "type": "u64"
+        },
+        {
+          "name": "finalAmount",
+          "type": "u64"
+        },
+        {
+          "name": "withTransfer",
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "name": "withdrawV2",
+      "accounts": [
+        {
+          "name": "config",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "locker",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "mint",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "admin",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "userTa",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "userTaOwner",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "vaultTa",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "burnTa",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "associatedTokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "rent",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "vaultBump",
+          "type": "u8"
+        },
+        {
+          "name": "burnBump",
+          "type": "u8"
+        },
+        {
+          "name": "withdrawAmount",
+          "type": "u64"
+        },
+        {
+          "name": "beforeAmount",
+          "type": "u64"
+        },
+        {
+          "name": "finalAmount",
+          "type": "u64"
+        }
+      ]
+    }
+  ],
+  "accounts": [
+    {
+      "name": "Config",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "admin",
+            "type": "publicKey"
+          },
+          {
+            "name": "isFrozen",
+            "type": "bool"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Locker",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "owner",
+            "type": "publicKey"
+          },
+          {
+            "name": "mints",
+            "type": {
+              "vec": "publicKey"
+            }
+          },
+          {
+            "name": "amounts",
+            "type": {
+              "vec": "u64"
+            }
+          },
+          {
+            "name": "version",
+            "type": "u8"
+          },
+          {
+            "name": "space",
+            "type": "u64"
+          }
+        ]
+      }
+    }
+  ],
+  "types": [
+    {
+      "name": "WithdrawType",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "Owner"
+          },
+          {
+            "name": "OwnerBurn"
+          },
+          {
+            "name": "NonOwner"
+          },
+          {
+            "name": "NonOwnerBurn"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ErrorCode2",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "TransferFail2"
+          }
+        ]
+      }
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "InvalidVault",
+      "msg": "Invalid vault."
+    },
+    {
+      "code": 6001,
+      "name": "InvalidBeforeState",
+      "msg": "Invalid before state."
+    },
+    {
+      "code": 6002,
+      "name": "InvalidBeforeState2",
+      "msg": "Invalid before state."
+    },
+    {
+      "code": 6003,
+      "name": "InvalidBeforeState3",
+      "msg": "Invalid before state."
+    },
+    {
+      "code": 6004,
+      "name": "InvalidBeforeState4",
+      "msg": "Invalid before state."
+    },
+    {
+      "code": 6005,
+      "name": "WithdrawForMintNotInLocker",
+      "msg": "Trying to withdraw a mint not in locker.."
+    },
+    {
+      "code": 6006,
+      "name": "InvalidFinalState",
+      "msg": "InvalidFinalState: FinalState."
+    },
+    {
+      "code": 6007,
+      "name": "BurnNotRequired",
+      "msg": "BurnNotRequired"
+    },
+    {
+      "code": 6008,
+      "name": "BurnRequired",
+      "msg": "BurnRequired"
+    },
+    {
+      "code": 6009,
+      "name": "InsufficientFunds",
+      "msg": "InsufficientFunds"
+    }
+  ],
+  "metadata": {
+    "address": "FLoc9nBwGb2ayzVzb5GC9NttuPY3CxMhd4KDnApr79Ab"
+  }
+}
