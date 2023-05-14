@@ -17,6 +17,8 @@ dataSources:
         - name: Casier
           file: ./idls/casier.json
       callHandlers:
+        - function: initLocker
+          handler: handleInitLockerCall
         - function: deposit
           handler: handleDepositCall
         - function: withdraw

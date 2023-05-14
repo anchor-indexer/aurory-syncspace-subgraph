@@ -29,6 +29,7 @@ type Locker @entity {
 type LockerMint @entity {
   id: ID! # locker-mint
   locker: Bytes!
+  owner: Bytes!
   mint: Bytes!
   amount: BigInt!
 }

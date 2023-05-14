@@ -1,6 +1,7 @@
 import { Address, BigInt, log } from '@anchor-indexer/ts';
 import {
   DepositCall,
+  InitLockerCall,
   WithdrawAndBurnCall,
   WithdrawCall,
   WithdrawV2Call,
@@ -9,25 +10,33 @@ import { Config, Locker, LockerMint } from '../generated/schema';
 
 export {
   DepositCall,
+  InitLockerCall,
   WithdrawAndBurnCall,
   WithdrawCall,
   WithdrawV2Call,
 } from '../generated/Casier/Casier';
 export { Config, Locker, LockerMint } from '../generated/schema';
 
-export function handleDepositCall(call: DepositCall): void {
+export function handleInitLockerCall(call: InitLockerCall): void {
   let args = call.args;
   let accounts = call.accounts;
   let id = accounts.locker;
   let locker = Locker.load(id.toBase58());
   if (locker) {
-    log.debug('deposit: updating locker {}', [id.toBase58()]);
+    log.error('initLocker: locker already exists {}', [id.toBase58()]);
   } else {
-    log.debug('deposit: initializing locker {}', [id.toBase58()]);
+    log.debug('initLocker: initializing locker {}', [id.toBase58()]);
     locker = new Locker(id.toBase58());
     locker.owner = accounts.owner;
     locker.save();
   }
+}
+
+export function handleDepositCall(call: DepositCall): void {
+  let args = call.args;
+  let accounts = call.accounts;
+  let id = accounts.locker;
+
   let lockerMintId = id.toBase58() + '-' + accounts.mint.toBase58();
   let lockerMint = LockerMint.load(lockerMintId);
   if (lockerMint) {
@@ -37,8 +46,9 @@ export function handleDepositCall(call: DepositCall): void {
     log.debug('deposit: initializing locker mint {}', [lockerMintId]);
     lockerMint = new LockerMint(lockerMintId);
     lockerMint.locker = id;
+    lockerMint.owner = accounts.owner;
     lockerMint.mint = accounts.mint;
-    lockerMint.amount = BigInt.fromU64(0);
+    lockerMint.amount = args.depositAmount;
   }
   lockerMint.save();
 }
@@ -70,28 +80,21 @@ function withdraw(
   mint: Address,
   finalAmount: BigInt
 ): void {
-  let locker = Locker.load(id.toBase58());
-  if (!locker) {
-    log.debug('{}: locker does not exist {}', [t, id.toBase58()]);
+  let lockerMintId = id.toBase58() + '-' + mint.toBase58();
+  let lockerMint = LockerMint.load(lockerMintId);
+  if (!lockerMint) {
+    log.debug('{}: locker mint does not exist {}', [t, lockerMintId]);
   } else {
-    log.debug('{}: updating locker {}', [t, id.toBase58()]);
+    log.debug('{}: updating locker mint {}', [t, lockerMintId]);
 
-    let lockerMintId = id.toBase58() + '-' + mint.toBase58();
-    let lockerMint = LockerMint.load(lockerMintId);
-    if (!lockerMint) {
-      log.debug('{}: locker mint does not exist {}', [t, lockerMintId]);
+    lockerMint.amount = BigInt.fromU64(0);
+
+    if (finalAmount.gt(BigInt.fromU64(0))) {
+      lockerMint.amount = finalAmount;
     } else {
-      log.debug('{}: updating locker mint {}', [t, lockerMintId]);
-
       lockerMint.amount = BigInt.fromU64(0);
-
-      if (finalAmount.gt(BigInt.fromU64(0))) {
-        lockerMint.amount = finalAmount;
-      } else {
-        lockerMint.amount = BigInt.fromU64(0);
-      }
-
-      lockerMint.save();
     }
+
+    lockerMint.save();
   }
 }
